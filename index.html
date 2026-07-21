@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garimpo Look — Achados de moda feminina</title>
+<meta name="description" content="Garimpo Look — vitrine de moda feminina com achados selecionados da Shopee. Peças de tendência, preço justo, entrega rastreada.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://down-br.img.susercontent.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #15110d;
+    --surface: #241c15;
+    --gold: #c6a15c;
+    --gold-bright: #e8c077;
+    --rose: #e8536f;
+    --cream: #f6efe2;
+    --sand: #9c8d76;
+    --radius: 14px;
+    --max: 1180px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--ink);
+    color: var(--cream);
+    font-family: 'Manrope', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  svg { display:block; max-width:100%; }
+  a { color:inherit; text-decoration:none; }
+  section[id] { scroll-margin-top: 90px; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+
+  .eyebrow {
+    font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.14em;
+    text-transform:uppercase; color: var(--gold);
+  }
+  h1, h2, h3 { font-family:'Fraunces', serif; font-weight:600; line-height:1.05; }
+
+  /* NAV */
+  .nav {
+    position:sticky; top:0; z-index:50;
+    background: rgba(21,17,13,0.88);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border-bottom:1px solid rgba(198,161,92,0.18);
+  }
+  .nav .wrap { display:flex; align-items:center; justify-content:space-between; height:76px; }
+  .logo { font-family:'Fraunces', serif; font-weight:700; font-size:22px; display:flex; align-items:baseline; gap:7px; }
+  .logo span { font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--gold); letter-spacing:0.14em; }
+  .nav-links { display:flex; gap:32px; font-size:14px; font-weight:500; }
+  .nav-links a { opacity:0.82; transition: opacity .2s, color .2s; }
+  .nav-links a:hover { opacity:1; color:var(--gold-bright); }
+  .nav-cta {
+    font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.06em;
+    border:1px solid var(--gold); color:var(--gold); padding:9px 18px; border-radius:999px;
+    transition: background .2s, color .2s;
+  }
+  .nav-cta:hover { background:var(--gold); color:var(--ink); }
+  .burger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:6px; }
+  .burger span { width:22px; height:2px; background:var(--cream); border-radius:2px; }
+  .mobile-panel { display:none; flex-direction:column; padding-bottom:18px; }
+  .nav.open .mobile-panel { display:flex; }
+  .mobile-panel a { padding:12px 4px; font-size:15px; border-bottom:1px solid rgba(246,239,226,0.08); }
+
+  /* HERO */
+  .hero { position:relative; padding: 88px 0 64px; overflow:hidden; }
+  .hero .wrap { position:relative; z-index:1; }
+  .hero-vein { position:absolute; top:-40px; right:-100px; width:640px; z-index:0; opacity:0.35; pointer-events:none; }
+  .hero h1 { font-size: clamp(40px, 6vw, 76px); max-width:12ch; margin-top:18px; }
+  .hero h1 em { font-style:italic; color:var(--gold-bright); }
+  .hero p.sub { margin-top:22px; max-width:46ch; font-size:17px; line-height:1.6; color:var(--sand); }
+  .hero-ctas { display:flex; gap:16px; margin-top:36px; flex-wrap:wrap; }
+  .btn {
+    font-weight:700; font-size:14px; padding:15px 28px; border-radius:999px;
+    display:inline-flex; align-items:center; gap:8px; cursor:pointer; border:1px solid transparent;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .btn-primary { background: linear-gradient(120deg,var(--gold),var(--gold-bright)); color:var(--ink); }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 30px -8px rgba(198,161,92,0.55); }
+  .btn-ghost { border-color: rgba(246,239,226,0.3); color:var(--cream); }
+  .btn-ghost:hover { border-color: var(--cream); }
+  .trust-strip { display:flex; flex-wrap:wrap; gap:28px; margin-top:56px; }
+  .trust-strip span { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; color:var(--sand); text-transform:uppercase; }
+
+  /* MARQUEE */
+  .marquee { border-top:1px solid rgba(198,161,92,0.18); border-bottom:1px solid rgba(198,161,92,0.18); background:var(--surface); padding:13px 0; overflow:hidden; white-space:nowrap; }
+  .marquee-track { display:inline-flex; gap:48px; animation: scroll 34s linear infinite; }
+  .marquee-track span { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; color:var(--gold); text-transform:uppercase; }
+  @keyframes scroll { from { transform:translateX(0);} to { transform:translateX(-50%);} }
+
+  /* VITRINE */
+  .filters { padding-top:56px; }
+  .filters-head { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:28px; flex-wrap:wrap; gap:12px; }
+  .filters-head h2 { font-size:clamp(28px,3vw,38px); }
+  .chip-row { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:40px; }
+  .chip {
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.05em;
+    padding:9px 16px; border-radius:999px; border:1px solid rgba(246,239,226,0.18);
+    color:var(--sand); cursor:pointer; background:transparent; transition: all .2s;
+  }
+  .chip:hover { border-color:var(--gold); color:var(--cream); }
+  .chip.active { background:var(--gold); border-color:var(--gold); color:var(--ink); font-weight:600; }
+
+  .grid { display:grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap:22px; }
+  .card {
+    background: var(--surface); border-radius: var(--radius); overflow:hidden;
+    border:1px solid rgba(198,161,92,0.12);
+    display:flex; flex-direction:column;
+    opacity:0; transform:translateY(16px); animation: rise .55s ease forwards;
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .card:hover { border-color: rgba(198,161,92,0.4); transform: translateY(-3px); }
+  @keyframes rise { to { opacity:1; transform:translateY(0);} }
+
+  .card-visual { position:relative; aspect-ratio: 4 / 5; overflow:hidden; }
+  .card-photo {
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    transition: transform .5s ease; z-index:1;
+  }
+  .card:hover .card-photo { transform: scale(1.05); }
+  .card-art { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+  .card-art svg { width:44%; height:auto; color: rgba(198,161,92,0.42); }
+  .card-art .art-label {
+    position:absolute; bottom:16px; left:0; right:0; text-align:center;
+    font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.16em;
+    text-transform:uppercase; color: rgba(156,141,118,0.5);
+  }
+  .card-tag {
+    position:absolute; top:12px; left:12px; z-index:2;
+    font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.06em;
+    color:var(--cream); background:rgba(21,17,13,0.62);
+    -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px);
+    padding:4px 8px; border-radius:5px;
+  }
+  .card-badge {
+    position:absolute; top:12px; right:12px; z-index:2;
+    background:var(--rose); color:#fff; font-family:'JetBrains Mono',monospace;
+    font-size:11px; font-weight:600; padding:4px 9px; border-radius:999px;
+  }
+  .card-trend {
+    position:absolute; bottom:12px; right:12px; z-index:2;
+    background:rgba(21,17,13,0.62); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px);
+    border:1px solid rgba(246,239,226,0.25); font-family:'JetBrains Mono',monospace;
+    font-size:10px; letter-spacing:0.05em; color:var(--cream);
+    padding:5px 10px; border-radius:999px; text-transform:uppercase;
+  }
+
+  .card-body { padding:16px 16px 18px; display:flex; flex-direction:column; flex:1; }
+  .card-cat { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; color:var(--gold); text-transform:uppercase; margin-bottom:6px; }
+  .card-name { font-size:16px; font-weight:600; font-family:'Manrope',sans-serif; line-height:1.35; margin-bottom:9px; }
+  .card-proof { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--sand); margin-bottom:12px; }
+  .card-proof .star { color: var(--gold-bright); }
+  .price-row { display:flex; align-items:baseline; gap:9px; margin-bottom:14px; margin-top:auto; }
+  .price-old { font-size:13px; color:var(--sand); text-decoration:line-through; }
+  .price-new { font-size:20px; font-weight:800; color:var(--cream); font-family:'Fraunces',serif; }
+  .card-cta {
+    display:flex; align-items:center; justify-content:center; gap:8px; width:100%;
+    padding:12px; border-radius:999px; background:transparent; border:1px solid var(--gold);
+    color:var(--gold); font-weight:700; font-size:13px; cursor:pointer;
+    transition: background .2s, color .2s;
+  }
+  .card-cta:hover { background:var(--gold); color:var(--ink); }
+
+  .load-more-row { display:flex; justify-content:center; padding: 42px 0 0; }
+  .empty-note { color:var(--sand); font-size:14px; padding: 20px 0 40px; }
+
+  /* HOW */
+  .how { padding-top:96px; padding-bottom:100px; }
+  .how-inner { border-top:1px solid rgba(198,161,92,0.14); padding-top:48px; }
+  .how h2 { margin-top:14px; font-size:clamp(26px,3vw,34px); max-width:20ch; }
+  .how-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; margin-top:40px; }
+  .how-step .num { font-family:'JetBrains Mono',monospace; color:var(--gold); font-size:13px; margin-bottom:14px; display:block; }
+  .how-step h3 { font-size:19px; margin-bottom:10px; }
+  .how-step p { font-size:14px; color:var(--sand); line-height:1.6; }
+
+  /* FOOTER */
+  footer { background:var(--surface); border-top:1px solid rgba(198,161,92,0.16); padding-top:56px; padding-bottom:32px; }
+  .foot-grid { display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px; }
+  .foot-brand p { color:var(--sand); font-size:13.5px; line-height:1.7; margin-top:14px; max-width:36ch; }
+  .foot-col h4 { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; }
+  .foot-col a { display:block; color:var(--sand); font-size:13.5px; margin-bottom:10px; }
+  .foot-col a:hover { color:var(--cream); }
+  .disclosure { margin-top:44px; padding-top:24px; border-top:1px solid rgba(246,239,226,0.08); font-size:12px; color:var(--sand); line-height:1.7; max-width:74ch; }
+  .copyright { margin-top:18px; font-size:12px; color:rgba(156,141,118,0.6); }
+
+  @media (max-width: 860px) {
+    .nav-links, .nav-cta { display:none; }
+    .burger { display:flex; }
+    .how-grid { grid-template-columns:1fr; gap:28px; }
+    .foot-grid { grid-template-columns:1fr; gap:28px; }
+    .hero { padding-top:56px; }
+    .grid { grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); gap:14px; }
+    .card-body { padding:12px 12px 14px; }
+    .card-name { font-size:14.5px; }
+    .price-new { font-size:18px; }
+    .card-cta { font-size:12px; padding:11px 6px; white-space:nowrap; }
+    .card-proof { font-size:11.5px; margin-bottom:10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+  }
+  a:focus-visible, button:focus-visible { outline:2px solid var(--gold-bright); outline-offset:3px; }
+</style>
+</head>
+<body>
+
+  <header class="nav" id="siteNav">
+    <div class="wrap">
+      <a href="#top" class="logo">Garimpo <span>LOOK</span></a>
+      <nav class="nav-links">
+        <a href="#vitrine">Vitrine</a>
+        <a href="#como-funciona">Como funciona</a>
+      </nav>
+      <a class="nav-cta" href="#vitrine">Ver achados de hoje →</a>
+      <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="wrap mobile-panel" id="mobilePanel">
+      <a href="#vitrine">Vitrine</a>
+      <a href="#como-funciona">Como funciona</a>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <svg class="hero-vein" viewBox="0 0 640 420" fill="none" aria-hidden="true">
+      <path d="M-20 340 C120 300 160 380 260 300 C360 220 380 120 520 140 C580 148 600 100 660 60" stroke="url(#veinGrad)" stroke-width="2.5" stroke-linecap="round"/>
+      <defs>
+        <linearGradient id="veinGrad" x1="0" y1="0" x2="640" y2="420">
+          <stop offset="0%" stop-color="#c6a15c" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#e8c077" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#c6a15c" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="wrap">
+      <p class="eyebrow">Garimpo Look · Moda Feminina</p>
+      <h1>Moda que vale <em>garimpar.</em></h1>
+      <p class="sub">Vasculhamos a Shopee todos os dias atrás dos achados femininos do momento — preço justo, estilo em alta, direto pra sua casa.</p>
+      <div class="hero-ctas">
+        <a href="#vitrine" class="btn btn-primary">Ver achados de hoje ↓</a>
+        <a href="#como-funciona" class="btn btn-ghost">Como funciona</a>
+      </div>
+      <div class="trust-strip">
+        <span>Frete grátis em itens selecionados</span>
+        <span>Pagamento seguro Shopee</span>
+        <span>Entrega rastreada</span>
+        <span>Garantia do comprador</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Novos achados toda semana</span>
+      <span>Preço que vale a garimpagem</span>
+      <span>Envio rápido Shopee</span>
+      <span>Siga pra não perder nenhum achado</span>
+      <span>Novos achados toda semana</span>
+      <span>Preço que vale a garimpagem</span>
+      <span>Envio rápido Shopee</span>
+      <span>Siga pra não perder nenhum achado</span>
+    </div>
+  </div>
+
+  <section class="filters wrap" id="vitrine">
+    <div class="filters-head">
+      <h2>Vitrine de achados</h2>
+      <p class="eyebrow" id="countLabel">30 peças garimpadas</p>
+    </div>
+    <div class="chip-row" id="chipRow"></div>
+    <div class="grid" id="grid"></div>
+    <div class="load-more-row" id="loadMoreRow">
+      <button class="btn btn-ghost" id="loadMore">Ver mais achados</button>
+    </div>
+  </section>
+
+  <section class="how wrap" id="como-funciona">
+    <div class="how-inner">
+      <p class="eyebrow">Como funciona</p>
+      <h2>Do garimpo até a sua porta, em três passos.</h2>
+      <div class="how-grid">
+        <div class="how-step">
+          <span class="num">01</span>
+          <h3>Garimpe seu achado</h3>
+          <p>Filtre por categoria na vitrine e encontre a peça que combina com o seu estilo.</p>
+        </div>
+        <div class="how-step">
+          <span class="num">02</span>
+          <h3>Compre direto na Shopee</h3>
+          <p>Clique em "Garimpar na Shopee" e finalize a compra com pagamento protegido.</p>
+        </div>
+        <div class="how-step">
+          <span class="num">03</span>
+          <h3>Receba em casa</h3>
+          <p>Acompanhe o pedido com entrega rastreada até a porta, sem sair do sofá.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <a href="#top" class="logo">Garimpo <span>LOOK</span></a>
+          <p>Curadoria de moda feminina garimpada na Shopee — peças selecionadas pelo preço justo e pelo estilo em alta. Marca irmã do Garimpo Tech.</p>
+        </div>
+        <div class="foot-col">
+          <h4>Navegar</h4>
+          <a href="#vitrine">Vitrine</a>
+          <a href="#como-funciona">Como funciona</a>
+        </div>
+        <div class="foot-col">
+          <h4>Siga</h4>
+          <a href="#">Instagram</a>
+          <a href="#">TikTok</a>
+        </div>
+      </div>
+      <p class="disclosure">Garimpo Look é um site independente e não é operado pela Shopee. Os links de produtos são links de afiliado: ao clicar e comprar através deles, o Garimpo Look pode receber uma comissão, sem nenhum custo adicional para você. Preços, estoque e prazos são definidos pela Shopee e podem mudar a qualquer momento.</p>
+      <p class="copyright">© 2026 Garimpo Look. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+<script>
+/* ============================================================
+   COMO PERSONALIZAR
+
+   Cada produto abaixo tem 3 campos que VOCÊ precisa preencher
+   com os dados reais da listagem que você garimpou na Shopee:
+
+     img   -> URL da foto do produto.
+              Na página da Shopee: clique com o botão direito na
+              foto > "Copiar endereço da imagem". Vai vir algo tipo
+              https://down-br.img.susercontent.com/file/xxxxxxxx
+              Cole essa URL aqui. Enquanto ficar vazio, o card mostra
+              uma ilustração da categoria (não quebra o layout).
+
+     link  -> Seu link de afiliado daquele produto.
+
+     sold / rating -> Número de vendas e nota reais da listagem.
+              Copie exatamente o que aparece na Shopee. Número
+              inventado é propaganda enganosa e derruba a confiança
+              de quem compra.
+
+   Os preços e nomes de exemplo abaixo servem de rascunho —
+   ajuste para os da listagem real.
+   ============================================================ */
+
+const DEFAULT_LINK = 'https://shopee.com.br/';
+const PAGE_SIZE = 12;
+
+const products = [
+  // ---------- VESTIDOS ----------
+  { id:1,  cat:'Vestidos',   name:'Vestido Macaquinho Feminino Curto Alcinha Com',  priceOld:139.98, priceNew:69.99, sold:'8 mil+',  rating:'', badge:'Mais vendido', img:'https://down-bs-br.img.susercontent.com/br-11134207-81z1k-mgv2kzw12dxjd0.webp', link:'https://s.shopee.com.br/AUsY2hE9MB' },
+  { id:2,  cat:'Vestidos',   name:'Vestido Midi Feminino Casual Verão Com Bojo',    priceOld:105.00, priceNew:66.15, sold:'8 mil+',  rating:'', badge:'Mais vendido', img:'https://down-bs-br.img.susercontent.com/br-11134207-7r98o-m9vqdodjfgah26.webp', link:'https://s.shopee.com.br/3qLe6Sd7rt' },
+  { id:3,  cat:'Vestidos',   name:'Vestido Longo feminino estampando floral alça',  priceOld:150.93, priceNew:64.90, sold:'5 mil+',  rating:'', badge:'Mais vendido', img:'https://down-bs-br.img.susercontent.com/br-11134207-81zuf-mkym06gzad4w3b.webp', link:'https://s.shopee.com.br/6AjYslY6L0' },
+
+  // ---------- BLUSAS ----------
+  { id:4,  cat:'Blusas',     name:'Blusinha Cropped Bata Borboleta Feminina Duna',  priceOld:60.00,  priceNew:24.60, sold:'5 mil+',  rating:'', badge:'Mais vendido', img:'https://down-bs-br.img.susercontent.com/br-11134207-81ztc-mk1fywxxvrwi83.webp', link:'https://s.shopee.com.br/2g9giHMEsD' },
+  { id:5,  cat:'Blusas',     name:'KIT 3 Blusa Termica Feminina Blusa De Frio',     priceOld:99.83,  priceNew:59.90, sold:'10 mil+', rating:'', badge:'Mais vendido', img:'https://down-bs-br.img.susercontent.com/br-11134207-820lc-mq82xxmz99mp08.webp', link:'https://s.shopee.com.br/9fJR3AKU6t' },
+  { id:6,  cat:'Blusas',     name:'Kit 4 Croppeds Golinha Canelado Moda Gringa',    priceOld:130.00, priceNew:59.80, sold:'4 mil+',  rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-81z1k-mehudxd9vwn61c.webp', link:'https://s.shopee.com.br/9fJR3BK54C' },
+
+  // ---------- CASACOS ----------
+  { id:7,  cat:'Casacos',    name:'Jaqueta De Couro Feminina Com Ziper Inverno',    priceOld:99.98,  priceNew:39.99, sold:'90 mil+', rating:'', badge:'Mais vendido', img:'https://down-bs-br.img.susercontent.com/br-11134207-81z1k-mgy3ulo8m6tjb3.webp', link:'https://s.shopee.com.br/3B5xJCNdRn' },
+  { id:8,  cat:'Casacos',    name:'Blazer Feminino Casaquinho Maxi Longo Sobretudo', priceOld:79.92, priceNew:47.15, sold:'20 mil+', rating:'', badge:'Mais vendido', img:'https://down-bs-br.img.susercontent.com/d96c4beb583e74494129f520088514c1.webp', link:'https://s.shopee.com.br/8fQtrJ8CFZ' },
+  { id:9,  cat:'Casacos',    name:'Casaco Teddy Feminino Pelúcia Tipo Pele de',     priceOld:65.00,  priceNew:65.00, sold:'3 mil+',  rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-820mc-mnurwflsmhvmd4.webp', link:'https://s.shopee.com.br/8AUdGQUBtP' },
+
+  // ---------- CONJUNTOS ----------
+  { id:10, cat:'Conjuntos',  name:'Conjunto Linhão Feminino Com Cinto Verão 2025',  priceOld:120.00, priceNew:62.40, sold:'9 mil+',  rating:'', badge:'Mais vendido', img:'https://down-bs-br.img.susercontent.com/br-11134207-820mf-mlm1q8981pmseb.webp', link:'https://s.shopee.com.br/8V7Tf0DEN4' },
+  { id:11, cat:'Conjuntos',  name:'Conjunto feminino cereja em tule com calçinha e', priceOld:33.90, priceNew:20.00, sold:'4 mil+',  rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-7r98o-mbtwiccrxv8916.webp', link:'https://s.shopee.com.br/qi2WukgBZ' },
+  { id:12, cat:'Conjuntos',  name:'Conjunto Colete Alfaiataria, Moda Gringa',       priceOld:64.32,  priceNew:61.10, sold:'5 mil+',  rating:'', badge:'Mais vendido', img:'https://down-bs-br.img.susercontent.com/br-11134207-7r98o-lxziw6to5l7667.webp', link:'https://s.shopee.com.br/9V00qtPoLH' },
+
+  // ---------- CALÇAS ----------
+  { id:13, cat:'Calças',     name:'Calça Alfaiataria Social Feminina Pantalona',    priceOld:119.80, priceNew:59.90, sold:'10 mil+', rating:'', badge:'Mais vendido', img:'https://down-bs-br.img.susercontent.com/br-11134207-81ztc-mjseq87pyuip8e.webp', link:'https://s.shopee.com.br/3B5xJDoroN' },
+  { id:14, cat:'Calças',     name:'Calça Cargo Jeans Feminina Bolso Lateral',       priceOld:141.28, priceNew:64.99, sold:'30 mil+', rating:'', badge:'Mais vendido', img:'https://down-bs-br.img.susercontent.com/br-11134207-7r98o-md0p65f3f20x38.webp', link:'https://s.shopee.com.br/BSLjj32vD' },
+  { id:15, cat:'Calças',     name:'Calça Feminina Cintura Alta Wide Leg Pantalona', priceOld:89.98,  priceNew:47.69, sold:'3 mil+',  rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-820ll-mph0okuosphdae.webp', link:'https://s.shopee.com.br/8pkK3eaS6d' },
+
+  // ---------- SAIAS ----------
+  { id:16, cat:'Saias',      name:'Saia Feminina Midi Lápis Social Evangelica',     priceOld:49.98,  priceNew:21.99, sold:'3 mil+',  rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-81z1k-mhnfq85xe4n766.webp', link:'https://s.shopee.com.br/2BDQ7RMGAr' },
+  { id:17, cat:'Saias',      name:'Saia Longa Feminina - Saia Moda Evangélica Saia', priceOld:148.72, priceNew:69.90, sold:'1 mil+', rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-820le-mo7d62b4ktts89.webp', link:'https://s.shopee.com.br/4AyUV7EVbB' },
+  { id:18, cat:'Saias',      name:'Saia Midi Alfaiataria Com Bolso e Saia com',     priceOld:89.27,  priceNew:49.99, sold:'301',     rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-7r98o-maiqsxq19dov2a.webp', link:'https://s.shopee.com.br/9ANASIym3z' },
+
+  // ---------- FITNESS ----------
+  { id:19, cat:'Fitness',    name:'Calça Legging Feminina Cintura Alta 3D',         priceOld:25.90,  priceNew:25.90, sold:'5 mil+',  rating:'', badge:'Mais vendido', img:'https://down-bs-br.img.susercontent.com/br-11134207-81zug-mky8oz5hi60z04.webp', link:'https://s.shopee.com.br/AKZ7qTCURR' },
+  { id:20, cat:'Fitness',    name:'Leggings De Ginástica Feminina Cintura Alta',    priceOld:49.99,  priceNew:49.99, sold:'2 mil+',  rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/cn-11134207-820l4-mk8zuu3a213494.webp', link:'https://s.shopee.com.br/qi2X0rC0g' },
+  { id:21, cat:'Fitness',    name:'Top Plus Size Academia Fitness Top Com Bojo',    priceOld:43.07,  priceNew:37.90, sold:'183',     rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-7r98o-ma0ajl1fyy9u80.webp', link:'https://s.shopee.com.br/2VqGW5XNls' },
+
+  // ---------- CALÇADOS ----------
+  { id:22, cat:'Calçados',   name:'Tênis Feminino Street Macio Tênis Feminino',     priceOld:109.62, priceNew:57.00, sold:'14',      rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-820m7-mpu7nhp2i51d0b.webp', link:'https://s.shopee.com.br/4VbKtmFKOf' },
+  { id:23, cat:'Calçados',   name:'Tênis Casual Feminino Tênis Branco Macio Leve',  priceOld:110.93, priceNew:59.90, sold:'2 mil+',  rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-81ztc-mju1sqq65kard6.webp', link:'https://s.shopee.com.br/5q6iUEFc8z' },
+  { id:24, cat:'Calçados',   name:'Tênis Plataforma Feminino Casual Tênis Feminino', priceOld:99.83, priceNew:59.90, sold:'1 mil+',  rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-820lm-mn69q8wbj3ltad.webp', link:'https://s.shopee.com.br/5VTs5cLHaM' },
+
+  // ---------- BOLSAS ----------
+  { id:25, cat:'Bolsas',     name:'Bolsa Feminina Bolsas Femininas Bolsa Pequena',  priceOld:88.93,  priceNew:24.90, sold:'7 mil+',  rating:'', badge:'Mais vendido', img:'https://down-bs-br.img.susercontent.com/br-11134207-81z1k-mh1zid24kxs757.webp', link:'https://s.shopee.com.br/7fYMfeGDpV' },
+  { id:26, cat:'Bolsas',     name:'Bolsa Feminina Media Bolsas Femininas Bolsa',    priceOld:88.48,  priceNew:23.89, sold:'916',     rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-81z1k-mh1xn7prw2knaa.webp', link:'https://s.shopee.com.br/4LHuhWXaQO' },
+  { id:27, cat:'Bolsas',     name:'Bolsa Feminina Bolsas Femininas Bolsa Pequena',  priceOld:88.52,  priceNew:23.90, sold:'535',     rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-81z1k-mh1xn7prw2knaa.webp', link:'https://s.shopee.com.br/50XbUkZRrx' },
+
+  // ---------- ACESSÓRIOS ----------
+  { id:28, cat:'Acessórios', name:'Óculos de Sol Feminino Vintage Pequena Armação', priceOld:18.60,  priceNew:8.37,  sold:'1 mil+',  rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-7r98o-lkz9w1latskz12.webp', link:'https://s.shopee.com.br/7VEwTMTeTD' },
+  { id:29, cat:'Acessórios', name:'Colar + Brinco Coração Ponto De Luz 50 Cm',      priceOld:99.94,  priceNew:16.99, sold:'343',     rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/sg-11134201-7rdxc-lzut8gqxuca217.webp', link:'https://s.shopee.com.br/80BD4InLK1' },
+  { id:30, cat:'Acessórios', name:'Colar e Brinco Kit Feminino Folheado Dourado',   priceOld:25.90,  priceNew:23.31, sold:'52',      rating:'', badge:null,           img:'https://down-bs-br.img.susercontent.com/br-11134207-7r98o-lo4c7g7dx6eh1d.webp', link:'https://s.shopee.com.br/gOcKpfetk' },
+];
+
+/* Ilustração por categoria — aparece enquanto a foto real não é colada */
+const art = {
+  'Vestidos':   '<path d="M40 16 Q50 23 60 16 L69 23 L62 42 L75 84 L25 84 L38 42 L31 23 Z"/>',
+  'Blusas':     '<path d="M38 22 Q50 29 62 22 L73 27 L79 47 L68 51 L67 76 L33 76 L32 51 L21 47 L27 27 Z"/>',
+  'Casacos':    '<path d="M37 20 L27 26 L21 52 L31 55 L33 86 L67 86 L69 55 L79 52 L73 26 L63 20 L50 27 Z"/><path d="M50 27 L50 86"/>',
+  'Conjuntos':  '<path d="M36 16 L64 16 L67 42 L33 42 Z"/><path d="M36 50 L64 50 L61 88 L53 88 L50 62 L47 88 L39 88 Z"/>',
+  'Calças':     '<path d="M34 14 L66 14 L63 30 L61 88 L52 88 L50 46 L48 88 L39 88 L37 30 Z"/><path d="M35 25 L65 25"/>',
+  'Saias':      '<path d="M35 22 L65 22 L76 84 L24 84 Z"/><path d="M35 32 L65 32"/>',
+  'Fitness':    '<path d="M37 14 L63 14 L60 34 L57 88 L51 88 L50 52 L49 88 L43 88 L40 34 Z"/><path d="M38 22 L62 22"/>',
+  'Calçados':   '<path d="M39 14 L58 14 L58 56 L74 63 L79 78 L39 78 Z"/><path d="M39 66 L74 66"/>',
+  'Bolsas':     '<path d="M28 40 L72 40 L77 82 L23 82 Z"/><path d="M39 40 Q50 16 61 40"/>',
+  'Acessórios': '<circle cx="50" cy="58" r="20"/><path d="M50 18 L50 38"/><circle cx="50" cy="16" r="4"/>',
+};
+
+const gradients = [
+  'linear-gradient(145deg,#2f261b,#1c1611)',
+  'linear-gradient(145deg,#33261f,#1a1310)',
+  'linear-gradient(145deg,#2a2117,#171310)',
+  'linear-gradient(145deg,#302213,#1b140e)'
+];
+
+const categories = ['Todos', ...Array.from(new Set(products.map(p => p.cat)))];
+let active = 'Todos';
+let shown = PAGE_SIZE;
+
+const brl = v => 'R$ ' + v.toFixed(2).replace('.', ',');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function currentList() {
+  return active === 'Todos' ? products : products.filter(p => p.cat === active);
+}
+
+function renderChips() {
+  const row = document.getElementById('chipRow');
+  row.innerHTML = categories.map(c =>
+    `<button class="chip ${c === active ? 'active' : ''}" data-cat="${esc(c)}">${esc(c)}</button>`
+  ).join('');
+  row.querySelectorAll('.chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      active = btn.dataset.cat;
+      shown = PAGE_SIZE;
+      renderChips();
+      renderGrid();
+    });
+  });
+}
+
+function cardHTML(p, i) {
+  const off = Math.round((1 - p.priceNew / p.priceOld) * 100);
+  const grad = gradients[i % gradients.length];
+  const href = p.link || DEFAULT_LINK;
+  const shape = art[p.cat] || art['Blusas'];
+
+  const visual = p.img
+    ? `<img class="card-photo" src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy" onerror="this.remove()">`
+    : '';
+
+  // Sem desconto real, nada de "-0%" nem preço riscado igual ao atual.
+  const temDesconto = off > 0 && p.priceOld > p.priceNew;
+
+  // Nota e vendas podem não vir. Mostra só o que existe de verdade,
+  // em vez de estampar "0,0 ★ · 0 vendidos", que derruba a credibilidade.
+  const temNota = p.rating && !/^0[.,]?0?$/.test(String(p.rating).trim());
+  const temVendas = p.sold && !/^0$/.test(String(p.sold).trim());
+  const prova = [
+    temNota ? `<span class="star">★</span> ${esc(p.rating)}` : '',
+    temVendas ? `${esc(p.sold)} vendidos` : ''
+  ].filter(Boolean).join(' · ');
+
+  return `
+  <article class="card" style="animation-delay:${(i % 12) * 0.04}s">
+    <div class="card-visual" style="background:${grad}">
+      <div class="card-art" aria-hidden="true">
+        <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">${shape}</svg>
+        <span class="art-label">${esc(p.cat)}</span>
+      </div>
+      ${visual}
+      <span class="card-tag">Nº${String(p.id).padStart(3,'0')}</span>
+      ${temDesconto ? `<span class="card-badge">-${off}%</span>` : ''}
+      ${p.badge ? `<span class="card-trend">${esc(p.badge)}</span>` : ''}
+    </div>
+    <div class="card-body">
+      <p class="card-cat">${esc(p.cat)}</p>
+      <h3 class="card-name">${esc(p.name)}</h3>
+      ${prova ? `<p class="card-proof">${prova}</p>` : ''}
+      <div class="price-row">
+        ${temDesconto ? `<span class="price-old">${brl(p.priceOld)}</span>` : ''}
+        <span class="price-new">${brl(p.priceNew)}</span>
+      </div>
+      <a class="card-cta" href="${esc(href)}" target="_blank" rel="noopener sponsored">Garimpar na Shopee →</a>
+    </div>
+  </article>`;
+}
+
+function renderGrid() {
+  const list = currentList();
+  const slice = list.slice(0, shown);
+
+  document.getElementById('grid').innerHTML = slice.map(cardHTML).join('');
+  document.getElementById('countLabel').textContent =
+    list.length + (list.length === 1 ? ' peça garimpada' : ' peças garimpadas');
+  document.getElementById('loadMoreRow').style.display =
+    shown < list.length ? 'flex' : 'none';
+}
+
+document.getElementById('loadMore').addEventListener('click', () => {
+  shown += PAGE_SIZE;
+  renderGrid();
+});
+
+renderChips();
+renderGrid();
+
+const burger = document.getElementById('burger');
+const siteNav = document.getElementById('siteNav');
+burger.addEventListener('click', () => {
+  const isOpen = siteNav.classList.toggle('open');
+  burger.setAttribute('aria-expanded', String(isOpen));
+});
+</script>
+</body>
+</html>
